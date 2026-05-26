@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danika - Terrenos</title>
+    
+    <!-- Favicon / Icono de la pestaña -->
+    <link rel="icon" type="image/png" href="resources/logo.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dota: {
+                            dark: '#0f1115',
+                            gray: '#1a1c23',
+                            grayLight: '#2c2f3a',
+                            fuchsia: '#ff2a75',
+                            fuchsiaLight: '#ff5c93',
+                            text: '#e2e8f0',
+                            muted: '#94a3b8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        dota: ['Montserrat', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url('resources/dashboard.png')",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0f1115;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #ff2a75, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f1115;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2c2f3a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff2a75;
+        }
+
+        /* Botón Glow */
+        .glow-button {
+            box-shadow: 0 0 15px rgba(255, 42, 117, 0.4);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .glow-button:hover {
+            box-shadow: 0 0 25px rgba(255, 42, 117, 0.8), 0 0 40px rgba(255, 42, 117, 0.3);
+            transform: translateY(-2px) scale(1.02);
+        }
+        .glow-button:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        /* ANIMACIÓN DE CARRUSEL INFINITO PARA IMAGEN LARGA */
+        @keyframes scroll-marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .marquee-container {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .marquee-content {
+            display: flex;
+            width: max-content;
+            animation: scroll-marquee 120s linear infinite;
+        }
+        /* Pausar animación al pasar el ratón */
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+
+        /* Efecto de desvanecimiento en los bordes del carrusel */
+        .marquee-container::before,
+        .marquee-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        /* Difuminado más ancho en monitores de PC */
+        @media (min-width: 768px) {
+            .marquee-container::before,
+            .marquee-container::after {
+                width: 250px;
+            }
+        }
+        .marquee-container::before {
+            left: 0;
+            background: linear-gradient(to right, #0f1115, transparent);
+        }
+        .marquee-container::after {
+            right: 0;
+            background: linear-gradient(to left, #0f1115, transparent);
+        }
+
+        /* Animaciones de entrada genéricas */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUpFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="antialiased font-sans selection:bg-dota-fuchsia selection:text-white">
+
+    <!-- Navbar limpia y minimalista (con link de regreso al inicio) -->
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-dota-dark/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html" class="flex-shrink-0 flex items-center gap-3 group">
+                    <img src="resources/logo.png" alt="Danika Logo" 
+                         class="w-10 h-10 object-contain rounded-full transition-transform group-hover:scale-110"
+                         onerror="this.src='https://placehold.co/40x40/transparent/ffffff?font=montserrat&text=D'">
+                    <span class="font-dota font-bold text-2xl tracking-wider text-white">DANIKA</span>
+                </a>
+                
+                <a href="index.html" class="text-dota-muted hover:text-white flex items-center gap-2 transition-colors">
+                    <i class="ph-bold ph-arrow-left"></i> Volver al Inicio
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="pt-40 pb-12 relative overflow-hidden bg-dota-gray">
+        <div class="absolute inset-0 bg-gradient-to-b from-dota-fuchsia/5 to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center reveal">
+            
+            <!-- Logo grande sin fondo, ni bordes, ni resplandores -->
+            <div class="flex justify-center mb-6">
+                <img src="resources/logo.png" alt="Danika Logo" class="w-32 h-32 sm:w-40 sm:h-40 object-contain" onerror="this.src='https://placehold.co/160x160/transparent/ff2a75?font=montserrat&text=LOGO'">
+            </div>
+            
+            <h1 class="text-4xl md:text-5xl font-dota font-black text-white mb-6">
+                Catálogo de <span class="text-gradient">Terrenos</span>
+            </h1>
+            <p class="text-xl text-dota-muted max-w-3xl mx-auto">
+                Danika ofrece mods para disfrutar de ellos de manera instantanea, puedes descargar desde este enlace los recursos.
+            </p>
+            
+            <div class="mt-8">
+                <button onclick="descargarRecursos()" class="bg-dota-fuchsia text-white px-8 py-3.5 rounded-md font-bold text-lg glow-button inline-flex items-center justify-center gap-2">
+                    <i class="ph-bold ph-download-simple text-xl"></i> Descargar Recursos
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carrusel Horizontal (Animación de Imagen Larga) -->
+    <section class="py-12 bg-[#0f1115] border-y border-white/5 relative">
+        <div class="text-center mb-8 reveal" style="animation-delay: 0.2s;">
+            <h3 class="text-white font-dota font-bold text-xl uppercase tracking-widest opacity-50">Vista Previa del Arsenal</h3>
+        </div>
+
+        <div class="marquee-container reveal" style="animation-delay: 0.4s;">
+            <div class="marquee-content">
+                
+                <!-- GRUPO 1: El contenido principal (Se repetirá 4 veces para asegurar ancho completo) -->
+                <!-- RUTA ACTUALIZADA A recursos/terrenos/terrenos.png -->
+                <div class="flex flex-shrink-0">
+                    <img src="resources/terrenos/terrenos.png" alt="Preview" class="h-64 sm:h-80 md:h-96 lg:h-[420px] w-auto max-w-none flex-shrink-0 block m-0 p-0" onerror="this.src='https://placehold.co/2000x400/1a1c23/ff2a75?text=IMAGEN+TERRENOS'">
+                    <img src="resources/terrenos/terrenos.png" alt="Preview" class="h-64 sm:h-80 md:h-96 lg:h-[420px] w-auto max-w-none flex-shrink-0 block m-0 p-0" onerror="this.src='https://placehold.co/2000x400/1a1c23/ff2a75?text=IMAGEN+TERRENOS'">
+                    <img src="resources/terrenos/terrenos.png" alt="Preview" class="h-64 sm:h-80 md:h-96 lg:h-[420px] w-auto max-w-none flex-shrink-0 block m-0 p-0" onerror="this.src='https://placehold.co/2000x400/1a1c23/ff2a75?text=IMAGEN+TERRENOS'">
+                    <img src="resources/terrenos/terrenos.png" alt="Preview" class="h-64 sm:h-80 md:h-96 lg:h-[420px] w-auto max-w-none flex-shrink-0 block m-0 p-0" onerror="this.src='https://placehold.co/2000x400/1a1c23/ff2a75?text=IMAGEN+TERRENOS'">
+                </div>
+                     
+                <!-- GRUPO 2: El clon exacto -->
+                <div class="flex flex-shrink-0">
+                    <img src="resources/terrenos/terrenos.png" alt="Preview" class="h-64 sm:h-80 md:h-96 lg:h-[420px] w-auto max-w-none flex-shrink-0 block m-0 p-0" onerror="this.src='https://placehold.co/2000x400/1a1c23/ff2a75?text=IMAGEN+TERRENOS'">
+                    <img src="resources/terrenos/terrenos.png" alt="Preview" class="h-64 sm:h-80 md:h-96 lg:h-[420px] w-auto max-w-none flex-shrink-0 block m-0 p-0" onerror="this.src='https://placehold.co/2000x400/1a1c23/ff2a75?text=IMAGEN+TERRENOS'">
+                    <img src="resources/terrenos/terrenos.png" alt="Preview" class="h-64 sm:h-80 md:h-96 lg:h-[420px] w-auto max-w-none flex-shrink-0 block m-0 p-0" onerror="this.src='https://placehold.co/2000x400/1a1c23/ff2a75?text=IMAGEN+TERRENOS'">
+                    <img src="resources/terrenos/terrenos.png" alt="Preview" class="h-64 sm:h-80 md:h-96 lg:h-[420px] w-auto max-w-none flex-shrink-0 block m-0 p-0" onerror="this.src='https://placehold.co/2000x400/1a1c23/ff2a75?text=IMAGEN+TERRENOS'">
+                </div>
+
+            </div>
+        </div>
+        
+        <div class="text-center mt-6 text-xs text-dota-muted reveal" style="animation-delay: 0.5s;">
+            <i class="ph-bold ph-arrows-out-line-horizontal align-middle"></i> Se desliza automáticamente
+        </div>
+    </section>
+
+    <!-- Footer Idéntico -->
+    <footer class="relative bg-[#0a0b0e] pt-10 pb-6 border-t border-white/5 overflow-hidden">
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <div class="absolute top-0 left-0 w-full md:w-[65%] h-full bg-[url('resources/ecuador.png')] bg-cover bg-center opacity-70 blur-md saturate-[2] transition-all duration-1000"
+                 style="-webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0) 90%); mask-image: linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0) 90%);">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-b from-[#0a0b0e]/30 via-transparent to-[#0a0b0e]/90"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-8 mb-8 text-center md:text-left">
+                <div class="max-w-sm flex flex-col items-center md:items-start">
+                    <div class="flex items-center gap-2 mb-4">
+                        <img src="resources/logo.png" alt="Danika Logo" 
+                             class="w-8 h-8 object-contain rounded-full"
+                             onerror="this.src='https://placehold.co/32x32/transparent/ffffff?font=montserrat&text=D'">
+                        <span class="font-dota font-bold text-xl text-white">DANIKA</span>
+                    </div>
+                    <p class="text-dota-muted text-sm">
+                        El mod manager más eficiente para personalizar tu experiencia visual en Dota 2.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-8 sm:gap-16 text-center md:text-left">
+                    <div>
+                        <h5 class="text-white font-bold mb-4">Comunidad</h5>
+                        <ul class="space-y-2 text-sm text-dota-muted">
+                            <li>
+                                <a href="https://discord.gg/CyY7bsJ7r2" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center md:justify-start gap-2 hover:text-dota-fuchsia transition-colors">
+                                    <i class="ph-fill ph-discord-logo text-xl"></i> Discord
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="text-white font-bold mb-4">Navegación</h5>
+                        <ul class="space-y-2 text-sm text-dota-muted">
+                            <li><a href="index.html" class="hover:text-dota-fuchsia transition-colors">Volver al Inicio</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-dota-muted">
+                <div class="flex flex-col items-center md:items-start gap-3">
+                    <p>&copy; 2026 Danika Mod Manager. Todos los derechos reservados.</p>
+                    <div class="flex items-center gap-3 mt-1 bg-white/5 px-5 py-2.5 rounded-full border border-white/10 shadow-md transition-transform duration-300 hover:scale-105 cursor-default">
+                        <img src="resources/ecuador.png" alt="Bandera de Ecuador" class="w-6 h-auto rounded-sm object-cover" onerror="this.outerHTML='🇪🇨'">
+                        <span class="text-dota-fuchsia font-bold uppercase tracking-widest text-xs sm:text-sm">Producto orgullosamente Ecuatoriano</span>
+                    </div>
+                </div>
+                <p class="text-center md:text-right max-w-2xl opacity-70 leading-relaxed px-4 md:px-0">
+                    Dota 2 es una marca registrada de Valve Corporation. Danika no está afiliado, respaldado ni patrocinado por Valve Corporation. El uso de software de terceros es bajo el propio riesgo del usuario.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Toast Notification -->
+    <div id="toast-notification" class="fixed bottom-5 right-5 z-[200] transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 bg-dota-gray border border-dota-fuchsia/50 shadow-[0_0_20px_rgba(255,42,117,0.3)] rounded-lg px-6 py-4 flex items-center gap-3">
+        <i class="ph-fill ph-check-circle text-dota-fuchsia text-2xl"></i>
+        <span id="toast-message" class="text-white font-medium text-sm sm:text-base"></span>
+    </div>
+
+    <script>
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3500);
+        }
+
+        function descargarRecursos() {
+            // Aquí pones la lógica real o el enlace de descarga de los recursos
+            showToast("Iniciando descarga de recursos de terrenos...");
+        }
+    </script>
+</body>
+</html>
