@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danika - Dota 2 Mod Manager</title>
+    
+    <!-- Favicon / Icono de la pestaña -->
+    <link rel="icon" type="image/png" href="resources/logo.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dota: {
+                            dark: '#0f1115',
+                            gray: '#1a1c23',
+                            grayLight: '#2c2f3a',
+                            fuchsia: '#ff2a75',
+                            fuchsiaLight: '#ff5c93',
+                            text: '#e2e8f0',
+                            muted: '#94a3b8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        dota: ['Montserrat', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url('resources/dashboard.png')",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0f1115;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #ff2a75, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .glass-card {
+            background: rgba(26, 28, 35, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* =========================================
+           ANIMACIONES PREMIUM PARA BOTONES GAMER
+           ========================================= */
+           
+        /* Botón Primario con Brillo y Barrido de Luz */
+        .glow-button {
+            box-shadow: 0 0 15px rgba(255, 42, 117, 0.4);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .glow-button:hover {
+            box-shadow: 0 0 25px rgba(255, 42, 117, 0.8), 0 0 40px rgba(255, 42, 117, 0.3);
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .glow-button:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        /* Efecto de luz pasando por encima (Sweep) */
+        .glow-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            transition: all 0.75s ease;
+        }
+
+        .glow-button:hover::after {
+            left: 200%;
+        }
+
+        /* Botón Secundario (Bordes y llenado) */
+        .outline-button {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .outline-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 42, 117, 0.15);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+
+        .outline-button:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .outline-button:hover {
+            border-color: #ff2a75;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(255, 42, 117, 0.3);
+            transform: translateY(-2px) scale(1.02);
+        }
+        
+        .outline-button:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        /* Custom Scrollbar Fucsia */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f1115;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2c2f3a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff2a75;
+        }
+
+        /* =========================================
+           ANIMACIONES DE ENTRADA (HERO SECTION)
+           ========================================= */
+        
+        @keyframes floatInLogo {
+            0% { opacity: 0; transform: scale(0.7) translateY(40px) rotate(-15deg); }
+            100% { opacity: 1; transform: scale(1) translateY(0) rotate(0deg); }
+        }
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-hero-logo {
+            opacity: 0;
+            animation: floatInLogo 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        .animate-hero-title {
+            opacity: 0;
+            animation: slideUpFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation-delay: 0.4s;
+        }
+        .animate-hero-desc {
+            opacity: 0;
+            animation: slideUpFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation-delay: 0.6s;
+        }
+        .animate-hero-buttons {
+            opacity: 0;
+            animation: slideUpFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation-delay: 0.8s;
+        }
+        .animate-hero-tags {
+            opacity: 0;
+            animation: slideUpFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation-delay: 1.1s;
+        }
+
+        /* =========================================
+           ANIMACIONES AL HACER SCROLL
+           ========================================= */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Retrasos para cascada en el scroll */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+    </style>
+</head>
+<body class="antialiased font-sans selection:bg-dota-fuchsia selection:text-white">
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-hero-pattern bg-cover bg-center bg-no-repeat bg-fixed">
+        <div class="absolute inset-0 bg-gradient-to-b from-dota-dark/80 via-dota-dark/90 to-dota-dark"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            
+            <!-- Logo Gigante con animación compleja -->
+            <div class="flex justify-center mb-8 animate-hero-logo">
+                <img src="resources/logo.png" alt="Danika Logo" 
+                     class="w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56 object-contain transition-transform duration-500 hover:scale-105"
+                     onerror="this.src='https://placehold.co/250x250/transparent/ffffff?font=montserrat&text=LOGO'">
+            </div>
+            
+            <!-- Título -->
+            <h1 class="animate-hero-title text-4xl md:text-6xl lg:text-7xl font-dota font-black text-white mb-6 tracking-tight drop-shadow-lg">
+                Domina tu <span class="text-gradient">Arsenal</span>
+            </h1>
+            
+            <!-- Descripción -->
+            <p class="animate-hero-desc mt-4 text-xl md:text-2xl text-dota-text max-w-3xl mx-auto mb-10 font-light drop-shadow-md">
+                Danika es el gestor de mods definitivo para Dota 2. Instala skins, anunciadores, interfaces y más con un solo clic. Rápido, intuitivo y enfocado en modding visual local.
+            </p>
+            
+            <!-- Botones de Acción -->
+            <div class="animate-hero-buttons flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#download" class="bg-dota-fuchsia text-white px-8 py-4 rounded-md font-bold text-lg glow-button flex items-center justify-center gap-2">
+                    <i class="ph-bold ph-download-simple text-xl"></i> Descargar para Windows
+                </a>
+                <a href="#workshop" class="bg-transparent border-2 border-dota-grayLight text-white px-8 py-4 rounded-md font-medium text-lg outline-button flex items-center justify-center gap-2">
+                    Explorar Taller <i class="ph-bold ph-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Etiquetas de Información -->
+            <div class="animate-hero-tags mt-12 flex items-center justify-center gap-6 text-sm text-dota-muted flex-wrap">
+                <span class="flex items-center gap-1"><i class="ph-fill ph-warning-circle text-dota-fuchsia"></i> Modding Responsable</span>
+                <span class="flex items-center gap-1"><i class="ph-fill ph-check-circle text-white"></i> Actualizaciones Automáticas</span>
+                <span class="flex items-center gap-1"><i class="ph-fill ph-shield-slash text-dota-muted"></i> Sin Inyección de Memoria</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workshop Categories Section -->
+    <section id="workshop" class="py-20 bg-[#15171d] overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-dota font-bold text-white mb-4">Explora el Taller</h2>
+                    <p class="text-dota-muted text-lg max-w-2xl">Miles de modificaciones creadas por la comunidad, organizadas e integradas directamente en el cliente de Danika.</p>
+                </div>
+                <!-- Color Fucsia Aplicado al botón de Galería -->
+                <button class="mt-6 md:mt-0 text-dota-fuchsia hover:text-white font-medium flex items-center gap-2 transition-colors">
+                    Ver Galería Completa <i class="ph-bold ph-arrow-right"></i>
+                </button>
+            </div>
+
+            <!-- Categories Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Category Card 1: Héroes -->
+                <div class="group relative rounded-xl overflow-hidden aspect-[4/5] cursor-pointer bg-dota-gray reveal delay-100">
+                    <img src="resources/heroes.png" alt="Hero Skins" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70" onerror="this.src='https://placehold.co/400x500/2a2a2a/ffffff?font=montserrat&text=Falta+heroes.png'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    
+                    <div class="absolute bottom-0 left-0 p-6 w-full transform transition-transform duration-300">
+                        <div class="w-10 h-10 bg-dota-fuchsia rounded-full flex items-center justify-center mb-4 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                            <i class="ph-bold ph-user text-white"></i>
+                        </div>
+                        <h4 class="text-2xl font-dota font-bold text-white mb-1">Héroes</h4>
+                        <p class="text-sm text-gray-400 group-hover:text-gray-300">Arcanas, Inmortales y Sets Custom</p>
+                    </div>
+                </div>
+
+                <!-- Category Card 2: Terrenos -->
+                <div class="group relative rounded-xl overflow-hidden aspect-[4/5] cursor-pointer bg-dota-gray reveal delay-200">
+                    <img src="resources/terrenos.png" alt="Map Themes" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70" onerror="this.src='https://placehold.co/400x500/1a1a2e/ffffff?font=montserrat&text=Falta+terrenos.png'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    
+                    <div class="absolute bottom-0 left-0 p-6 w-full transform transition-transform duration-300">
+                        <div class="w-10 h-10 bg-dota-fuchsia rounded-full flex items-center justify-center mb-4 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                            <i class="ph-bold ph-map-trifold text-white"></i>
+                        </div>
+                        <h4 class="text-2xl font-dota font-bold text-white mb-1">Terrenos</h4>
+                        <p class="text-sm text-gray-400 group-hover:text-gray-300">Clima, Torres y Mapas Temáticos</p>
+                    </div>
+                </div>
+
+                <!-- Category Card 3: Interfaz -->
+                <div class="group relative rounded-xl overflow-hidden aspect-[4/5] cursor-pointer bg-dota-gray reveal delay-300">
+                    <img src="resources/interfaz.png" alt="UI Elements" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70" onerror="this.src='https://placehold.co/400x500/2e1a1a/ffffff?font=montserrat&text=Falta+interfaz.png'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    
+                    <div class="absolute bottom-0 left-0 p-6 w-full transform transition-transform duration-300">
+                        <div class="w-10 h-10 bg-dota-fuchsia rounded-full flex items-center justify-center mb-4 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                            <i class="ph-bold ph-browser text-white"></i>
+                        </div>
+                        <h4 class="text-2xl font-dota font-bold text-white mb-1">Interfaz</h4>
+                        <p class="text-sm text-gray-400 group-hover:text-gray-300">HUDs, Cursores y Fuentes</p>
+                    </div>
+                </div>
+
+                <!-- Category Card 4: Audio -->
+                <div class="group relative rounded-xl overflow-hidden aspect-[4/5] cursor-pointer bg-dota-gray reveal delay-400">
+                    <img src="resources/audio.png" alt="Audio Packs" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70" onerror="this.src='https://placehold.co/400x500/1a2e1e/ffffff?font=montserrat&text=Falta+audio.png'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    
+                    <div class="absolute bottom-0 left-0 p-6 w-full transform transition-transform duration-300">
+                        <div class="w-10 h-10 bg-dota-fuchsia rounded-full flex items-center justify-center mb-4 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                            <i class="ph-bold ph-music-notes text-white"></i>
+                        </div>
+                        <h4 class="text-2xl font-dota font-bold text-white mb-1">Audio</h4>
+                        <p class="text-sm text-gray-400 group-hover:text-gray-300">Announcers y Music Packs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="relative bg-[#0a0b0e] pt-16 pb-8 border-t border-white/5 overflow-hidden">
+        
+        <!-- Bandera Ecuatoriana de Fondo con Desenfoque -->
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <!-- Aumentamos opacidad, saturación para revivir colores, y mejoramos el gradiente -->
+            <div class="absolute top-0 left-0 w-full md:w-[65%] h-full bg-[url('resources/ecuador.png')] bg-cover bg-center opacity-70 blur-md saturate-[2] transition-all duration-1000"
+                 style="-webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0) 90%); mask-image: linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0) 90%);">
+            </div>
+            <!-- Redujimos la capa negra de encima para que no la apague -->
+            <div class="absolute inset-0 bg-gradient-to-b from-[#0a0b0e]/30 via-transparent to-[#0a0b0e]/90"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-8 mb-12 reveal">
+                
+                <!-- Footer Brand -->
+                <div class="text-center md:text-left max-w-sm">
+                    <div class="flex items-center justify-center md:justify-start gap-2 mb-4">
+                        <img src="resources/logo.png" alt="Danika Logo" 
+                             class="w-8 h-8 object-contain rounded-full"
+                             onerror="this.src='https://placehold.co/32x32/transparent/ffffff?font=montserrat&text=D'">
+                        <span class="font-dota font-bold text-xl text-white">DANIKA</span>
+                    </div>
+                    <p class="text-dota-muted text-sm">
+                        El mod manager más eficiente para personalizar tu experiencia visual en Dota 2.
+                    </p>
+                </div>
+
+                <!-- Footer Links -->
+                <div class="flex gap-12 text-center md:text-left">
+                    <div>
+                        <h5 class="text-white font-bold mb-4">Comunidad</h5>
+                        <ul class="space-y-2 text-sm text-dota-muted">
+                            <li>
+                                <a href="https://discord.gg/CyY7bsJ7r2" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center md:justify-start gap-2 hover:text-dota-fuchsia transition-colors">
+                                    <i class="ph-fill ph-discord-logo text-xl"></i> Discord
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="text-white font-bold mb-4">Legal</h5>
+                        <ul class="space-y-2 text-sm text-dota-muted">
+                            <li><a href="javascript:void(0)" id="terms-link" class="hover:text-dota-fuchsia transition-colors">Términos de Uso</a></li>
+                            <li><a href="javascript:void(0)" id="privacy-link" class="hover:text-dota-fuchsia transition-colors">Privacidad</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright Line & Disclaimer -->
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-dota-muted reveal delay-200">
+                <div class="flex flex-col items-center md:items-start gap-1">
+                    <p>&copy; 2026 Danika Mod Manager. Creada por <span class="text-white font-medium">LyCodeLife</span>.</p>
+                    <div class="flex items-center gap-2 mt-1 bg-white/5 px-3 py-1.5 rounded-full border border-white/5 shadow-sm">
+                        <img src="resources/ecuador.png" alt="Bandera de Ecuador" class="w-4 h-auto rounded-sm object-cover" onerror="this.outerHTML='🇪🇨'">
+                        <span class="text-dota-fuchsia font-semibold uppercase tracking-wider text-[10px]">Producto orgullosamente Ecuatoriano</span>
+                    </div>
+                </div>
+                <p class="text-center md:text-right max-w-2xl opacity-70 leading-relaxed">
+                    Dota 2 es una marca registrada de Valve Corporation. Danika no está afiliado, respaldado ni patrocinado por Valve Corporation. El uso de software de terceros es bajo el propio riesgo del usuario. <strong class="text-white">No nos hacemos responsables si Valve decide banear el uso de mods locales en una "waveban"</strong>, ya que es un riesgo inherente al modding.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modales Legales (Términos y Privacidad) -->
+    
+    <!-- Modal Términos de Uso -->
+    <div id="terms-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center transition-opacity duration-300 opacity-0">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="closeModal('terms-modal')"></div>
+        <div class="modal-content relative bg-dota-gray border border-white/10 rounded-xl shadow-[0_0_40px_rgba(255,42,117,0.15)] w-full max-w-3xl max-h-[85vh] m-4 flex flex-col transform scale-95 transition-transform duration-300">
+            <!-- Header -->
+            <div class="flex justify-between items-center p-6 border-b border-white/5">
+                <h3 class="text-2xl font-dota font-bold text-white flex items-center gap-2">
+                    <i class="ph-fill ph-file-text text-dota-fuchsia"></i> Términos de Uso
+                </h3>
+                <button onclick="closeModal('terms-modal')" class="text-dota-muted hover:text-white transition-colors">
+                    <i class="ph-bold ph-x text-2xl"></i>
+                </button>
+            </div>
+            <!-- Body -->
+            <div class="p-6 overflow-y-auto text-dota-muted text-sm leading-relaxed space-y-4">
+                <p>Bienvenido a <strong class="text-white">Danika</strong>, un software gestor de mods visuales para Dota 2, desarrollado íntegramente por <strong class="text-white">LyCodeLife</strong>.</p>
+                
+                <h4 class="text-white font-bold text-base mt-4">1. Naturaleza del Software y Riesgo Inherente (Wavebans)</h4>
+                <p>Danika opera modificando temporalmente los archivos visuales locales (VPK) del cliente de juego. Es imprescindible que el usuario comprenda y acepte que <strong class="text-dota-fuchsia">absolutamente todas las herramientas de modding actuales para Dota 2 violan técnicamente el Acuerdo de Suscriptor a Steam (TOS)</strong> dictado por Valve Corporation.</p>
+                <p>Aunque Danika no inyecta rutinas en la memoria RAM para otorgar ventajas competitivas (no es un "cheat" o "hack"), la alteración de los archivos del cliente siempre opera en una zona gris de moderación. Por lo tanto, <strong class="text-white">LyCodeLife no asume ninguna responsabilidad legal ni moral</strong> si la cuenta de Steam del usuario es objeto de suspensiones, bloqueos por VAC o castigos masivos (conocidos como "Wavebans"). El uso de Danika corre 100% bajo el riesgo del usuario.</p>
+                
+                <h4 class="text-white font-bold text-base mt-4">2. Cumplimiento de Normativas (Cease and Desist)</h4>
+                <p>Respetamos profundamente la propiedad intelectual de Valve Corporation. Si en cualquier momento Valve emite una orden de cese y desistimiento (Cease and Desist) formal solicitando el retiro de este software, <strong class="text-dota-fuchsia">la orden será acatada de manera inmediata e irrevocable</strong>. En dicho escenario, los servidores se desconectarán, el software dejará de operar y esta página web será clausurada.</p>
+
+                <h4 class="text-white font-bold text-base mt-4">3. Prohibición de Comercialización</h4>
+                <p>Queda terminantemente prohibida la reventa, redistribución bajo muro de pago o cualquier alteración de Danika con fines lucrativos. Es y seguirá siendo una herramienta gratuita de la comunidad.</p>
+            </div>
+            <!-- Footer -->
+            <div class="p-4 border-t border-white/5 flex justify-end">
+                <button onclick="closeModal('terms-modal')" class="bg-dota-fuchsia hover:bg-dota-fuchsiaLight text-white px-6 py-2 rounded font-medium transition-colors shadow-lg shadow-dota-fuchsia/20">
+                    Aceptar y Entender
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Privacidad -->
+    <div id="privacy-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center transition-opacity duration-300 opacity-0">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="closeModal('privacy-modal')"></div>
+        <div class="modal-content relative bg-dota-gray border border-white/10 rounded-xl shadow-[0_0_40px_rgba(255,42,117,0.15)] w-full max-w-3xl max-h-[85vh] m-4 flex flex-col transform scale-95 transition-transform duration-300">
+            <!-- Header -->
+            <div class="flex justify-between items-center p-6 border-b border-white/5">
+                <h3 class="text-2xl font-dota font-bold text-white flex items-center gap-2">
+                    <i class="ph-fill ph-shield-check text-dota-fuchsia"></i> Política de Privacidad y Filosofía
+                </h3>
+                <button onclick="closeModal('privacy-modal')" class="text-dota-muted hover:text-white transition-colors">
+                    <i class="ph-bold ph-x text-2xl"></i>
+                </button>
+            </div>
+            <!-- Body -->
+            <div class="p-6 overflow-y-auto text-dota-muted text-sm leading-relaxed space-y-4">
+                <p><strong class="text-white">Danika</strong> es un proyecto creado por <strong class="text-white">LyCodeLife</strong>. Somos un grupo de fans trabajando para fans, de manera totalmente <strong class="text-dota-fuchsia">sin fines de lucro</strong>.</p>
+                
+                <h4 class="text-white font-bold text-base mt-4">Recopilación de Datos Nula</h4>
+                <p>Valoramos enormemente tu privacidad. Nuestro gestor no recopila datos personales sensibles, no captura credenciales de Steam, ni lee tus historiales de chat. Todo el procesamiento de los mods se realiza de manera local en tu equipo.</p>
+
+                <h4 class="text-white font-bold text-base mt-4">Nuestra Misión y Apoyo al Steam Workshop</h4>
+                <p>Lejos de querer perjudicar a Dota 2, promovemos la creación e integración de mods de forma fácil para mantener encendida la chispa artística de la comunidad. Al permitir que jugadores regulares prueben modificaciones y sets personalizados fácilmente, <strong class="text-white">aumentamos masivamente el interés y la visibilidad de los artistas en el Steam Workshop oficial.</strong></p>
+                <p>Creemos firmemente que cuando un usuario se enamora de un mod visual, es mucho más propenso a emitir sus votos positivos y apoyar económicamente a los creadores originales si el set es aceptado. En nuestra visión, fomentar la personalización local termina beneficiando la economía del juego y contribuyendo a que Valve reciba diseños de alta calidad validados por el propio interés de los jugadores.</p>
+            </div>
+            <!-- Footer -->
+            <div class="p-4 border-t border-white/5 flex justify-end">
+                <button onclick="closeModal('privacy-modal')" class="outline-button px-6 py-2 border border-white/20 rounded font-medium text-white transition-colors">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script para animaciones de Scroll y Modales -->
+    <script>
+        // Lógica de Modales Legales
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.remove('hidden');
+            // Trigger reflow (fuerza al navegador a aplicar los estilos antes de la transición)
+            void modal.offsetWidth; 
+            modal.classList.add('opacity-100');
+            modal.querySelector('.modal-content').classList.add('scale-100');
+            modal.querySelector('.modal-content').classList.remove('scale-95');
+            document.body.style.overflow = 'hidden'; // Evita scrollear la página principal por detrás
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.remove('opacity-100');
+            modal.querySelector('.modal-content').classList.remove('scale-100');
+            modal.querySelector('.modal-content').classList.add('scale-95');
+            
+            // Espera a que termine la animación CSS para ocularlo completamente
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = ''; 
+            }, 300); 
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Asignar los eventos de click a los enlaces del footer
+            const termsBtn = document.getElementById('terms-link');
+            const privacyBtn = document.getElementById('privacy-link');
+
+            if(termsBtn) {
+                termsBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openModal('terms-modal');
+                });
+            }
+
+            if(privacyBtn) {
+                privacyBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openModal('privacy-modal');
+                });
+            }
+
+            // Configurar Intersection Observer para animaciones al hacer Scroll
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
