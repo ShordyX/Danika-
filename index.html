@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danika - Dota 2 Mod Manager</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>Danika</title>
+    <meta name="description" content="Un gestor de mods para dota 2 basado unicamente en operar de manera local y promoveer el moding para tener mas contenido oficial a traves de workshoptools de dota 2">
+    <meta name="keywords" content="Danika, dota 2 mods, dota mods, skinchanger, dota 2 skinchanger">
     
     <!-- Favicon / Icono de la pestaña -->
     <link rel="icon" type="image/png" href="resources/logo.png">
@@ -215,7 +219,7 @@
 
     <!-- Navbar limpia y minimalista -->
     <nav class="fixed w-full z-50 transition-all duration-300 bg-dota-dark/90 backdrop-blur-md border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="w-full px-6 lg:px-12">
             <div class="flex items-center h-20">
                 <div class="flex-shrink-0 flex items-center gap-3">
                     <img src="resources/logo.png" alt="Danika Logo" 
@@ -228,10 +232,10 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-hero-pattern bg-cover bg-center bg-no-repeat bg-fixed">
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-hero-pattern bg-cover bg-center bg-no-repeat bg-fixed w-full">
         <div class="absolute inset-0 bg-gradient-to-b from-dota-dark/80 via-dota-dark/90 to-dota-dark"></div>
         
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+        <div class="relative w-full px-6 lg:px-12 text-center flex flex-col items-center">
             
             <div class="flex justify-center mb-8 animate-hero-logo">
                 <img src="resources/logo.png" alt="Danika Logo" 
@@ -264,8 +268,8 @@
     </section>
 
     <!-- Workshop Categories Section -->
-    <section id="workshop" class="py-20 bg-[#15171d] overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="workshop" class="py-20 bg-[#15171d] overflow-hidden w-full">
+        <div class="w-full px-6 lg:px-12">
             <div class="mb-12 reveal text-center md:text-left">
                 <h2 class="text-3xl md:text-4xl font-dota font-bold text-white mb-4">Explora todo lo que ofrece Danika</h2>
                 <p class="text-dota-muted text-lg max-w-3xl mx-auto md:mx-0">Explora los mods creados para Danika, ¡anímate! Puedes subir tus propios mods para que la comunidad disfrute, solo asegúrate de cumplir con las normas.</p>
@@ -319,7 +323,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="relative bg-[#0a0b0e] pt-10 pb-6 border-t border-white/5 overflow-hidden">
+    <footer class="relative bg-[#0a0b0e] pt-10 pb-6 border-t border-white/5 overflow-hidden w-full">
         
         <!-- Bandera Ecuatoriana de Fondo con Desenfoque -->
         <div class="absolute inset-0 z-0 pointer-events-none">
@@ -329,7 +333,7 @@
             <div class="absolute inset-0 bg-gradient-to-b from-[#0a0b0e]/30 via-transparent to-[#0a0b0e]/90"></div>
         </div>
 
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="relative z-10 w-full px-6 lg:px-12">
             <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-8 mb-8 reveal text-center md:text-left">
                 
                 <!-- Footer Brand -->
@@ -360,8 +364,8 @@
                     <div>
                         <h5 class="text-white font-bold mb-4">Legal</h5>
                         <ul class="space-y-2 text-sm text-dota-muted">
-                            <li><a href="javascript:void(0)" onclick="openModal('terms-modal')" class="hover:text-dota-fuchsia transition-colors">Términos de Uso</a></li>
-                            <li><a href="javascript:void(0)" onclick="openModal('privacy-modal')" class="hover:text-dota-fuchsia transition-colors">Privacidad</a></li>
+                            <li><a href="javascript:void(0)" onclick="openModalOnlyRead('terms-modal')" class="hover:text-dota-fuchsia transition-colors">Términos de Uso</a></li>
+                            <li><a href="javascript:void(0)" onclick="openModalOnlyRead('privacy-modal')" class="hover:text-dota-fuchsia transition-colors">Privacidad</a></li>
                         </ul>
                     </div>
                 </div>
@@ -412,10 +416,15 @@
                 <h4 class="text-white font-bold text-base mt-4">3. Prohibición de Comercialización</h4>
                 <p>Queda terminantemente prohibida la reventa, redistribución bajo muro de pago o cualquier alteración de Danika con fines lucrativos. Es y seguirá siendo una herramienta gratuita de la comunidad.</p>
             </div>
-            <!-- Footer -->
+            <!-- Footer con Botones Intercambiables -->
             <div class="p-4 border-t border-white/5 flex justify-end">
-                <button onclick="acceptTerms()" class="w-full sm:w-auto bg-dota-fuchsia hover:bg-dota-fuchsiaLight text-white px-6 py-3 rounded font-medium transition-colors shadow-lg shadow-dota-fuchsia/20 text-sm sm:text-base">
+                <!-- Botón para flujo de descarga directa -->
+                <button id="terms-download-btn" onclick="acceptTerms()" class="w-full sm:w-auto bg-dota-fuchsia hover:bg-dota-fuchsiaLight text-white px-6 py-3 rounded font-medium transition-colors shadow-lg shadow-dota-fuchsia/20 text-sm sm:text-base">
                     Aceptar y Continuar
+                </button>
+                <!-- Botón para solo lectura -->
+                <button id="terms-close-btn" onclick="closeModal('terms-modal')" class="hidden w-full sm:w-auto bg-dota-grayLight hover:bg-dota-gray/50 text-white border border-white/10 px-6 py-3 rounded font-medium transition-colors text-sm sm:text-base">
+                    Cerrar Lectura
                 </button>
             </div>
         </div>
@@ -445,13 +454,19 @@
                 <p>Lejos de querer perjudicar a Dota 2, promovemos la creación e integración de mods de forma fácil para mantener encendida la chispa artística de la comunidad. Al permitir que jugadores regulares prueben modificaciones y sets personalizados fácilmente, <strong class="text-white">aumentamos masivamente el interés y la visibilidad de los artistas en el Steam Workshop oficial.</strong></p>
                 <p>Creemos firmemente que cuando un usuario se enamora de un mod visual, es mucho más propenso a emitir sus votos positivos y apoyar económicamente a los creadores originales si el set es aceptado. En nuestra visión, fomentar la personalización local termina beneficiando la economía del juego y contribuyendo a que Valve reciba diseños de alta calidad validados por el propio interés de los jugadores.</p>
             </div>
-            <!-- Footer -->
+            <!-- Footer con Botones Intercambiables -->
             <div class="p-4 border-t border-white/5 flex flex-col sm:flex-row justify-end gap-3">
-                <button onclick="closeModal('privacy-modal')" class="w-full sm:w-auto outline-button px-6 py-3 border border-white/20 rounded font-medium text-white transition-colors text-sm sm:text-base text-center order-2 sm:order-1">
+                <!-- Botones del flujo de descarga -->
+                <button id="privacy-cancel-btn" onclick="closeModal('privacy-modal')" class="w-full sm:w-auto outline-button px-6 py-3 border border-white/20 rounded font-medium text-white transition-colors text-sm sm:text-base text-center order-2 sm:order-1">
                     Cancelar
                 </button>
-                <button onclick="acceptPrivacyAndDownload()" class="w-full sm:w-auto bg-dota-fuchsia hover:bg-dota-fuchsiaLight text-white px-6 py-3 rounded font-medium transition-colors shadow-lg shadow-dota-fuchsia/20 text-sm sm:text-base flex items-center justify-center gap-2 order-1 sm:order-2">
+                <button id="privacy-download-btn" onclick="acceptPrivacyAndDownload()" class="w-full sm:w-auto bg-dota-fuchsia hover:bg-dota-fuchsiaLight text-white px-6 py-3 rounded font-medium transition-colors shadow-lg shadow-dota-fuchsia/20 text-sm sm:text-base flex items-center justify-center gap-2 order-1 sm:order-2">
                     <i class="ph-bold ph-download-simple"></i> Aceptar y Descargar
+                </button>
+                
+                <!-- Botón exclusivo para solo lectura -->
+                <button id="privacy-close-btn" onclick="closeModal('privacy-modal')" class="hidden w-full sm:w-auto bg-dota-grayLight hover:bg-dota-gray/50 text-white border border-white/10 px-6 py-3 rounded font-medium transition-colors text-sm sm:text-base text-center">
+                    Cerrar Lectura
                 </button>
             </div>
         </div>
@@ -480,13 +495,19 @@
 
         // Funciones para el flujo de Descarga en Cascada
         function startDownloadFlow() {
+            // Mostrar elementos de descarga y ocultar los de lectura simple
+            document.getElementById('terms-download-btn').classList.remove('hidden');
+            document.getElementById('terms-close-btn').classList.add('hidden');
             openModal('terms-modal');
         }
 
         function acceptTerms() {
             closeModal('terms-modal');
-            // Espera a que termine la animación de cerrado para abrir el siguiente
             setTimeout(() => {
+                // Configurar el modal de privacidad para modo descarga antes de abrirlo
+                document.getElementById('privacy-cancel-btn').classList.remove('hidden');
+                document.getElementById('privacy-download-btn').classList.remove('hidden');
+                document.getElementById('privacy-close-btn').classList.add('hidden');
                 openModal('privacy-modal');
             }, 300);
         }
@@ -494,18 +515,21 @@
         function acceptPrivacyAndDownload() {
             closeModal('privacy-modal');
             setTimeout(() => {
-                // Aquí iría la lógica real de descarga. 
-                // Usamos el toast elegante en lugar de un alert bloqueante
                 showToast("¡Gracias por confiar en Danika! Pero aún no está disponible para su uso.");
-                
-                // Ejemplo de cómo se vería el código real:
-                // const link = document.createElement('a');
-                // link.href = 'resources/Danika_Installer.exe'; 
-                // link.download = 'Danika_Installer.exe';
-                // document.body.appendChild(link);
-                // link.click();
-                // document.body.removeChild(link);
             }, 350);
+        }
+
+        // Función específica para abrir modales solo como lectura informativa desde el Footer
+        function openModalOnlyRead(id) {
+            if (id === 'terms-modal') {
+                document.getElementById('terms-download-btn').classList.add('hidden');
+                document.getElementById('terms-close-btn').classList.remove('hidden');
+            } else if (id === 'privacy-modal') {
+                document.getElementById('privacy-cancel-btn').classList.add('hidden');
+                document.getElementById('privacy-download-btn').classList.add('hidden');
+                document.getElementById('privacy-close-btn').classList.remove('hidden');
+            }
+            openModal(id);
         }
 
         // Lógica Genérica de Modales
@@ -532,6 +556,11 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
+            // Forzar al navegador a que inicie siempre en el tope al recargar o regresar en el historial
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
+
             // Configurar Intersection Observer para animaciones al hacer Scroll
             const observerOptions = {
                 root: null,
