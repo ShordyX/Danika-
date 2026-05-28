@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Funcionamiento - Danika</title>
+    <meta name="description" content="Aprende cómo funciona Danika de manera segura y local.">
+    
+    <!-- Favicon / Icono de la pestaña -->
+    <link rel="icon" type="image/png" href="resources/logo.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dota: {
+                            dark: '#0f1115',
+                            gray: '#1a1c23',
+                            grayLight: '#2c2f3a',
+                            fuchsia: '#ff2a75',
+                            fuchsiaLight: '#ff5c93',
+                            text: '#e2e8f0',
+                            muted: '#94a3b8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        dota: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0f1115;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #ff2a75, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Base para las tarjetas de cristal y la animación de Hover optimizada */
+        .glass-card {
+            background: rgba(26, 28, 35, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 42, 117, 0.4);
+            box-shadow: 0 15px 35px -10px rgba(255, 42, 117, 0.2), inset 0 0 20px rgba(255, 42, 117, 0.05);
+        }
+
+        /* Única clase para la animación de entrada al hacer scroll */
+        .reveal-card {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        
+        .reveal-card.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f1115; }
+        ::-webkit-scrollbar-thumb { background: #2c2f3a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff2a75; }
+    </style>
+</head>
+<body class="antialiased font-sans selection:bg-dota-fuchsia selection:text-white flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-dota-dark/90 backdrop-blur-md border-b border-white/5">
+        <div class="w-full px-6 lg:px-12">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html" class="flex-shrink-0 flex items-center gap-3 transition-transform hover:scale-105 cursor-pointer">
+                    <img src="resources/logo.png" alt="Danika Logo" 
+                         class="w-10 h-10 object-contain rounded-full"
+                         onerror="this.src='https://placehold.co/40x40/transparent/ffffff?font=montserrat&text=D'">
+                    <span class="font-dota font-bold text-2xl tracking-wider text-white">DANIKA</span>
+                </a>
+                
+                <!-- Botón de regreso -->
+                <a href="index.html" class="flex items-center gap-2 text-dota-muted hover:text-white transition-colors text-sm sm:text-base font-medium">
+                    <i class="ph-bold ph-arrow-left"></i> Volver al inicio
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative pt-32 pb-20 lg:pt-40 lg:pb-32 flex-grow">
+        <!-- Glow background effect -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[400px] bg-dota-fuchsia/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+
+        <div class="relative z-10 w-full px-6 lg:px-12 max-w-5xl mx-auto">
+            
+            <!-- Header Section -->
+            <div class="text-center mb-16 reveal-card active">
+                <!-- Logo Grande y Limpio (Sin contenedor, ni resplandor) -->
+                <div class="flex justify-center mb-8">
+                    <img src="resources/logo.png" alt="Danika Logo" class="w-28 h-28 sm:w-36 sm:h-36 object-contain" onerror="this.src='https://placehold.co/144x144/transparent/ffffff?font=montserrat&text=D'">
+                </div>
+                
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-dota font-black text-white mb-6 tracking-tight drop-shadow-lg">
+                    Conoce el <span class="text-gradient">Motor Interno</span>
+                </h1>
+                <p class="text-lg text-dota-text/80 max-w-2xl mx-auto font-light">
+                    Danika está construido bajo principios de eficiencia y modding pasivo. No invadimos la memoria del juego; trabajamos de la mano con la arquitectura original de Valve.
+                </p>
+            </div>
+
+            <!-- Grid de Información -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                
+                <!-- Tarjeta: Motor Gráfico PyQt6 -->
+                <div class="glass-card reveal-card rounded-2xl p-8">
+                    <div class="w-12 h-12 bg-dota-grayLight rounded-xl flex items-center justify-center mb-6 border border-white/10">
+                        <i class="ph-bold ph-app-window text-2xl text-dota-fuchsia"></i>
+                    </div>
+                    <h3 class="text-2xl font-dota font-bold text-white mb-3">Interfaz con PyQt6</h3>
+                    <p class="text-dota-muted leading-relaxed text-sm">
+                        Danika usa el motor gráfico <strong>PyQt6</strong> para ofrecerte una interfaz amigable, moderna y elegante. Cuenta con toda la optimización posible para el mejor rendimiento, pero somos honestos: no es una app perfecta y siempre estamos trabajando para mejorarla.
+                    </p>
+                </div>
+
+                <!-- Tarjeta: Magia Local -->
+                <div class="glass-card reveal-card rounded-2xl p-8">
+                    <div class="w-12 h-12 bg-dota-grayLight rounded-xl flex items-center justify-center mb-6 border border-white/10">
+                        <i class="ph-bold ph-ghost text-2xl text-dota-fuchsia"></i>
+                    </div>
+                    <h3 class="text-2xl font-dota font-bold text-white mb-3">Magia Estrictamente Local</h3>
+                    <p class="text-dota-muted leading-relaxed text-sm">
+                        Con Danika puedes crear tus propios mods o reemplazar skins que tengas en tu inventario por inmortales exclusivas, pero <strong>todo opera a nivel local</strong>. A nivel de servidor no afectamos en nada; todo lo que ves en tu pantalla solamente lo ves tú. Para tus enemigos, no tienes nada.
+                    </p>
+                </div>
+
+                <!-- Tarjeta: Sustitución de VPKs -->
+                <div class="glass-card reveal-card rounded-2xl p-8">
+                    <div class="w-12 h-12 bg-dota-grayLight rounded-xl flex items-center justify-center mb-6 border border-white/10">
+                        <i class="ph-bold ph-folder-open text-2xl text-dota-fuchsia"></i>
+                    </div>
+                    <h3 class="text-2xl font-dota font-bold text-white mb-3">Sustitución de VPKs</h3>
+                    <p class="text-dota-muted leading-relaxed text-sm">
+                        En lugar de inyectar código malicioso o modificar binarios (`.dll`), Danika reempaqueta dinámicamente los archivos <strong>VPK</strong> locales. El cliente de Dota 2 simplemente lee los nuevos modelos como si fueran parte de una actualización habitual.
+                    </p>
+                </div>
+
+                <!-- Tarjeta: Rendimiento -->
+                <div class="glass-card reveal-card rounded-2xl p-8">
+                    <div class="w-12 h-12 bg-dota-grayLight rounded-xl flex items-center justify-center mb-6 border border-white/10">
+                        <i class="ph-bold ph-lightning text-2xl text-dota-fuchsia"></i>
+                    </div>
+                    <h3 class="text-2xl font-dota font-bold text-white mb-3">Rendimiento Cero Impacto</h3>
+                    <p class="text-dota-muted leading-relaxed text-sm">
+                        El gestor no requiere ejecutarse en segundo plano mientras juegas. Configuras tus mods, aplicas los cambios y puedes cerrar Danika. El juego no sufrirá tirones, caídas de FPS ni latencia adicional.
+                    </p>
+                </div>
+
+                <!-- Tarjeta: Entorno Aislado -->
+                <div class="glass-card reveal-card rounded-2xl p-8 md:col-span-2">
+                    <div class="flex flex-col md:flex-row gap-8 items-start md:items-center">
+                        <div class="flex-shrink-0 w-16 h-16 bg-dota-fuchsia/20 rounded-2xl flex items-center justify-center border border-dota-fuchsia/30">
+                            <i class="ph-bold ph-shield-check text-3xl text-dota-fuchsia"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-dota font-bold text-white mb-3">Entorno Aislado y Seguridad</h3>
+                            <p class="text-dota-muted leading-relaxed text-sm">
+                                Tu cuenta es lo más importante. Por ello, automatizamos la inclusión de comandos de inicio seguros y generamos respaldos automáticos de los archivos originales. Si algo falla o simplemente quieres revertir todo a la normalidad, un solo botón restaura tu cliente de Dota 2 a su estado original ("Vanilla") en menos de 5 segundos.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta: Procesamiento Local -->
+                <div class="glass-card reveal-card rounded-2xl p-8 md:col-span-2">
+                    <div class="flex flex-col md:flex-row gap-8 items-start md:items-center">
+                        <div class="flex-shrink-0 w-16 h-16 bg-[#1a1c23] rounded-2xl flex items-center justify-center border border-white/10 shadow-[inset_0_0_15px_rgba(255,42,117,0.15)]">
+                            <i class="ph-bold ph-cpu text-3xl text-dota-fuchsia"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-dota font-bold text-white mb-3">Dependencia de Hardware</h3>
+                            <p class="text-dota-muted leading-relaxed text-sm">
+                                Danika opera siempre de manera local para la generación y creación de mods, por lo que su rendimiento depende altamente de tu hardware. Al delegar la compilación a tu equipo en lugar de a un servidor externo, los tiempos de procesamiento dependerán directamente de la capacidad de tu procesador y unidad de almacenamiento.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta: Requisitos y Nota del DLC -->
+                <div class="glass-card reveal-card rounded-2xl p-8 md:col-span-2 border-t-dota-fuchsia/30 bg-gradient-to-b from-white/[0.02] to-transparent">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 bg-dota-fuchsia/20 rounded-xl flex items-center justify-center border border-dota-fuchsia/50 shadow-[0_0_20px_rgba(255,42,117,0.2)]">
+                            <i class="ph-bold ph-list-checks text-2xl text-dota-fuchsia"></i>
+                        </div>
+                        <h3 class="text-2xl font-dota font-bold text-white">Requisitos mínimos para usar Danika</h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-2">
+                        <ul class="space-y-4 text-sm text-dota-muted">
+                            <li class="flex items-center gap-3">
+                                <i class="ph-fill ph-check-circle text-dota-fuchsia text-lg"></i> 
+                                <span><strong class="text-white">Sistema Operativo:</strong> Windows 11 24H2</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="ph-fill ph-check-circle text-dota-fuchsia text-lg"></i> 
+                                <span><strong class="text-white">Resolución:</strong> 1080P Nativo</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="ph-fill ph-check-circle text-dota-fuchsia text-lg"></i> 
+                                <span><strong class="text-white">Memoria RAM:</strong> 8 GB (Recomendado 16 GB)</span>
+                            </li>
+                        </ul>
+                        <ul class="space-y-4 text-sm text-dota-muted">
+                            <li class="flex items-center gap-3">
+                                <i class="ph-fill ph-check-circle text-dota-fuchsia text-lg"></i> 
+                                <span><strong class="text-white">Procesador:</strong> Intel Core i3 / AMD Ryzen 3 (Doble núcleo a 2.8 GHz)</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="ph-fill ph-check-circle text-dota-fuchsia text-lg"></i> 
+                                <span><strong class="text-white">Gráficos:</strong> NVIDIA GeForce GTX 650 / AMD Radeon HD 7750</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="ph-fill ph-check-circle text-dota-fuchsia text-lg"></i> 
+                                <span><strong class="text-white">Almacenamiento:</strong> 60 GB disponibles (SSD altamente recomendado)</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Nota importante sobre DLC y Windows 10 -->
+                    <div class="bg-dota-fuchsia/10 border border-dota-fuchsia/20 rounded-xl p-5 flex gap-4 items-start mt-6">
+                        <i class="ph-fill ph-warning-circle text-dota-fuchsia text-2xl flex-shrink-0 mt-0.5"></i>
+                        <p class="text-sm text-dota-text leading-relaxed">
+                            <strong class="text-white">IMPORTANTE:</strong> Es fundamental tener el DLC <strong>Dota 2 Workshop Tools</strong> instalado para una mejor experiencia y potenciar verdaderamente a Danika. Todos estos requisitos garantizan un buen flujo de trabajo. No obstante, puedes probar en Windows 10 e ir reportando bugs para hacerlo compatible en un futuro.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative bg-[#0a0b0e] pt-10 pb-6 border-t border-white/5 overflow-hidden w-full mt-auto">
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <div class="absolute top-0 left-0 w-full md:w-[65%] h-full bg-[url('resources/ecuador.png')] bg-cover bg-center opacity-70 blur-md saturate-[2] transition-all duration-1000"
+                 style="-webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0) 90%); mask-image: linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0) 90%);">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-b from-[#0a0b0e]/30 via-transparent to-[#0a0b0e]/90"></div>
+        </div>
+
+        <div class="relative z-10 w-full px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-8 mb-8 text-center md:text-left">
+                <div class="max-w-sm flex flex-col items-center md:items-start">
+                    <div class="flex items-center gap-2 mb-4">
+                        <img src="resources/logo.png" alt="Danika Logo" 
+                             class="w-8 h-8 object-contain rounded-full"
+                             onerror="this.src='https://placehold.co/32x32/transparent/ffffff?font=montserrat&text=D'">
+                        <span class="font-dota font-bold text-xl text-white">DANIKA</span>
+                    </div>
+                    <p class="text-dota-muted text-sm">
+                        El mod manager más eficiente para personalizar tu experiencia visual en Dota 2.
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-8 sm:gap-16 text-center md:text-left">
+                    <div>
+                        <h5 class="text-white font-bold mb-4">Comunidad</h5>
+                        <ul class="space-y-2 text-sm text-dota-muted">
+                            <li>
+                                <a href="https://discord.gg/CyY7bsJ7r2" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center md:justify-start gap-2 hover:text-dota-fuchsia transition-colors">
+                                    <i class="ph-fill ph-discord-logo text-xl"></i> Discord
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="text-white font-bold mb-4">Legal</h5>
+                        <ul class="space-y-2 text-sm text-dota-muted">
+                            <li><a href="javascript:void(0)" onclick="openModalOnlyRead('terms-modal')" class="hover:text-dota-fuchsia transition-colors">Términos de Uso</a></li>
+                            <li><a href="javascript:void(0)" onclick="openModalOnlyRead('privacy-modal')" class="hover:text-dota-fuchsia transition-colors">Privacidad</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-dota-muted">
+                <div class="flex flex-col items-center md:items-start gap-3">
+                    <p>&copy; 2026 Danika Mod Manager. Todos los derechos reservados.</p>
+                    <div class="flex items-center gap-3 mt-1 bg-white/5 px-5 py-2.5 rounded-full border border-white/10 shadow-md transition-transform duration-300 hover:scale-105 cursor-default">
+                        <img src="resources/ecuador.png" alt="Bandera de Ecuador" class="w-6 h-auto rounded-sm object-cover" onerror="this.outerHTML='🇪🇨'">
+                        <span class="text-dota-fuchsia font-bold uppercase tracking-widest text-xs sm:text-sm">Producto orgullosamente Ecuatoriano</span>
+                    </div>
+                </div>
+                <p class="text-center md:text-right max-w-2xl opacity-70 leading-relaxed px-4 md:px-0">
+                    Dota 2 es una marca registrada de Valve Corporation. Danika no está afiliado, respaldado ni patrocinado por Valve Corporation. El uso de software de terceros es bajo el propio riesgo del usuario. <strong class="text-white">No nos hacemos responsables si Valve decide banear el uso de mods locales en una "waveban"</strong>, ya que es un riesgo inherente al modding.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modales Legales -->
+    <div id="terms-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center transition-opacity duration-300 opacity-0 px-4">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="closeModal('terms-modal')"></div>
+        <div class="modal-content relative bg-dota-gray border border-white/10 rounded-xl shadow-[0_0_40px_rgba(255,42,117,0.15)] w-full max-w-3xl max-h-[85vh] flex flex-col transform scale-95 transition-transform duration-300">
+            <div class="flex justify-between items-center p-4 sm:p-6 border-b border-white/5">
+                <h3 class="text-xl sm:text-2xl font-dota font-bold text-white flex items-center gap-2">
+                    <i class="ph-fill ph-file-text text-dota-fuchsia"></i> Términos de Uso
+                </h3>
+                <button onclick="closeModal('terms-modal')" class="text-dota-muted hover:text-white transition-colors">
+                    <i class="ph-bold ph-x text-2xl"></i>
+                </button>
+            </div>
+            <div class="p-4 sm:p-6 overflow-y-auto text-dota-muted text-sm leading-relaxed space-y-4">
+                <p>Bienvenido a <strong class="text-white">Danika</strong>, un software gestor de mods visuales para Dota 2.</p>
+                <h4 class="text-white font-bold text-base mt-4">1. Naturaleza del Software y Riesgo Inherente (Wavebans)</h4>
+                <p>Danika opera modificando temporalmente los archivos visuales locales (VPK) del cliente de juego. Es imprescindible que el usuario comprenda y acepte que <strong class="text-dota-fuchsia">absolutamente todas las herramientas de modding actuales para Dota 2 violan técnicamente el Acuerdo de Suscriptor a Steam (TOS)</strong> dictado por Valve Corporation.</p>
+                <p>Aunque Danika no inyecta rutinas en la memoria RAM para otorgar ventajas competitivas, la alteración de los archivos del cliente siempre opera en una zona gris de moderación. Por lo tanto, <strong class="text-white">no asumimos ninguna responsabilidad legal ni moral</strong> si la cuenta de Steam del usuario es objeto de suspensiones, bloqueos por VAC o castigos masivos (conocidos como "Wavebans"). El uso de Danika corre 100% bajo el riesgo del usuario.</p>
+                <h4 class="text-white font-bold text-base mt-4">2. Cumplimiento de Normativas (Cease and Desist)</h4>
+                <p>Respetamos profundamente la propiedad intelectual de Valve Corporation. Si en cualquier momento Valve emite una orden de cese y desistimiento (Cease and Desist) formal solicitando el retiro de este software, <strong class="text-dota-fuchsia">la orden será acatada de manera inmediata e irrevocable</strong>. En dicho escenario, los servidores se desconectarán, el software dejará de operar y esta página web será clausurada.</p>
+                <h4 class="text-white font-bold text-base mt-4">3. Prohibición de Comercialización</h4>
+                <p>Queda terminantemente prohibida la reventa, redistribución bajo muro de pago o cualquier alteración de Danika con fines lucrativos. Es y seguirá siendo una herramienta gratuita de la comunidad.</p>
+            </div>
+            <div class="p-4 border-t border-white/5 flex justify-end">
+                <button id="terms-close-btn" onclick="closeModal('terms-modal')" class="w-full sm:w-auto bg-dota-grayLight hover:bg-dota-gray/50 text-white border border-white/10 px-6 py-3 rounded font-medium transition-colors text-sm sm:text-base">
+                    Cerrar Lectura
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="privacy-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center transition-opacity duration-300 opacity-0 px-4">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="closeModal('privacy-modal')"></div>
+        <div class="modal-content relative bg-dota-gray border border-white/10 rounded-xl shadow-[0_0_40px_rgba(255,42,117,0.15)] w-full max-w-3xl max-h-[85vh] flex flex-col transform scale-95 transition-transform duration-300">
+            <div class="flex justify-between items-center p-4 sm:p-6 border-b border-white/5">
+                <h3 class="text-xl sm:text-2xl font-dota font-bold text-white flex items-center gap-2">
+                    <i class="ph-fill ph-shield-check text-dota-fuchsia"></i> Política de Privacidad y Filosofía
+                </h3>
+                <button onclick="closeModal('privacy-modal')" class="text-dota-muted hover:text-white transition-colors">
+                    <i class="ph-bold ph-x text-2xl"></i>
+                </button>
+            </div>
+            <div class="p-4 sm:p-6 overflow-y-auto text-dota-muted text-sm leading-relaxed space-y-4">
+                <p><strong class="text-white">Danika</strong> es un proyecto creado por y para fans, de manera totalmente <strong class="text-dota-fuchsia">sin fines de lucro</strong>.</p>
+                <h4 class="text-white font-bold text-base mt-4">Recopilación de Datos Nula</h4>
+                <p>Valoramos enormemente tu privacidad. Nuestro gestor no recopila datos personales sensibles, no captura credenciales de Steam, ni lee tus historiales de chat. Todo el procesamiento de los mods se realiza de manera local en tu equipo.</p>
+                <h4 class="text-white font-bold text-base mt-4">Nuestra Misión y Apoyo al Steam Workshop</h4>
+                <p>Lejos de querer perjudicar a Dota 2, promovemos la creación e integración de mods de forma fácil para mantener encendida la chispa artística de la comunidad. Al permitir que jugadores regulares prueben modificaciones y sets personalizados fácilmente, <strong class="text-white">aumentamos masivamente el interés y la visibilidad de los artistas en el Steam Workshop oficial.</strong></p>
+                <p>Creemos firmemente que cuando un usuario se enamora de un mod visual, es mucho más propenso a emitir sus votos positivos y apoyar económicamente a los creadores originales si el set es aceptado. En nuestra visión, fomentar la personalización local termina beneficiando la economía del juego y contribuyendo a que Valve reciba diseños de alta calidad validados por el propio interés de los jugadores.</p>
+            </div>
+            <div class="p-4 border-t border-white/5 flex flex-col sm:flex-row justify-end gap-3">
+                <button id="privacy-close-btn" onclick="closeModal('privacy-modal')" class="w-full sm:w-auto bg-dota-grayLight hover:bg-dota-gray/50 text-white border border-white/10 px-6 py-3 rounded font-medium transition-colors text-sm sm:text-base text-center">
+                    Cerrar Lectura
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script de lógica y animación centralizada -->
+    <script>
+        // Modal functions
+        function openModalOnlyRead(id) { openModal(id); }
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.remove('hidden');
+            void modal.offsetWidth; 
+            modal.classList.add('opacity-100');
+            modal.querySelector('.modal-content').classList.add('scale-100');
+            modal.querySelector('.modal-content').classList.remove('scale-95');
+            document.body.style.overflow = 'hidden'; 
+        }
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.remove('opacity-100');
+            modal.querySelector('.modal-content').classList.remove('scale-100');
+            modal.querySelector('.modal-content').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = ''; 
+            }, 300); 
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
+
+            // Intersection Observer Optimizado: una sola lógica para todas las tarjetas
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Un ligero delay dinámico si múltiples tarjetas aparecen al mismo tiempo
+                        setTimeout(() => {
+                            entry.target.classList.add('active');
+                        }, index * 100); 
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observamos todos los elementos con la clase "reveal-card"
+            const cards = document.querySelectorAll('.reveal-card');
+            cards.forEach(card => observer.observe(card));
+        });
+    </script>
+</body>
+</html>
